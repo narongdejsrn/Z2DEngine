@@ -40,19 +40,19 @@ if (NOT COREVID)
     message(FATAL_ERROR "CoreVideo not found")
 endif()
 
-set(IMGUI_DIR ./lib/imgui/)
+set(IMGUI_DIR libs/imgui/)
 include_directories(${IMGUI_DIR} ${IMGUI_DIR}/examples)
 
-include_directories(lib/gl3w/)
+include_directories(libs/gl3w/)
 
 add_executable(ZYEngine src/main.cpp
-        lib/gl3w/GL/gl3w.c
+        libs/gl3w/GL/gl3w.c
         ${IMGUI_DIR}/examples/imgui_impl_sdl.cpp
         ${IMGUI_DIR}/examples/imgui_impl_opengl3.cpp
         ${IMGUI_DIR}/imgui.cpp
         ${IMGUI_DIR}/imgui_draw.cpp
         ${IMGUI_DIR}/imgui_demo.cpp
-        ${IMGUI_DIR}/imgui_widgets.cpp)
+        ${IMGUI_DIR}/imgui_widgets.cpp src/Engine.cpp src/Engine.h src/Constants.h)
 
 target_link_libraries(ZYEngine ${OPENGL} ${COCOA} ${COREVID})
 
