@@ -3,7 +3,8 @@
 //
 
 #include "Engine.h"
-#include "Game.h"
+#include "Game/Game.h"
+#include "EntityWindow.h"
 
 SDL_Window* window;
 ImGuiIO* io;
@@ -11,6 +12,7 @@ SDL_Event Engine::event;
 SDL_GLContext* Engine::gl_context;
 SDL_Renderer* Engine::renderer;
 Game* game;
+EntityWindow* entityWindow;
 
 Engine::Engine() {
     this->isRunning = true;
@@ -79,7 +81,10 @@ void Engine::Initialize(int width, int height) {
 
     // Initialize Game Window
     game = new Game();
-    game->Initialize();
+    game->Initialize(800, 600);
+
+    // Initialize Entity Window
+    entityWindow = new EntityWindow(*game);
 
     this->isRunning = true;
 }
@@ -122,10 +127,15 @@ void Engine::DrawMainMenuBar() {
 }
 
 void Engine::DrawGameWindow() {
-    if(ImGui::Begin("Game")) {
+    if(ImGui::Begin("Game", NULL, ImGuiWindowFlags_NoResize)) {
+        ImGui::SetWindowSize(ImVec2(800, 600));
         game->Render();
-        ImGui::Image((void *)game->GetTextureID(), ImGui::GetWindowSize(),
-                ImVec2(0, 1), ImVec2(1, 0));
+        auto wPos = ImGui::GetWindowPos();
+        ImGui::GetWindowDrawList()->AddImage((void *)Game::GameTexture,
+                                             { wPos.x, wPos.y},
+                                             { wPos.x + 800, wPos.y + 600},
+                                             {0, 1},
+                                             {1, 0});
         ImGui::End();
     }
 }
@@ -138,6 +148,11 @@ void Engine::Update() {
 
     DrawMainMenuBar();
     DrawGameWindow();
+
+    entityWindow->Update();
+
+    bool show_demo_window = true;
+    ImGui::ShowDemoWindow(&show_demo_window);
 }
 
 void Engine::Render() {

@@ -70,8 +70,8 @@ add_executable(ZYEngine src/main.cpp
         src/Engine.cpp
         src/Engine.h
         src/Constants.h
-        src/Game.cpp
-        src/Game.h)
+        src/Game/Game.cpp
+        src/Game/Game.h src/Game/EntityManager.cpp src/Game/EntityManager.h src/Game/Entity.cpp src/Game/Entity.h src/Game/Component.h src/Game/Components/SpriteComponent.h src/EntityWindow.cpp src/EntityWindow.h)
 message(${OPENGL})
 
 target_link_libraries(ZYEngine ${GLEW_LIB} ${OPENGL_LIB})
