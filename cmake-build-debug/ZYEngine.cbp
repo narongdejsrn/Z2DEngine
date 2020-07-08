@@ -46,7 +46,9 @@
 				<Compiler>
 					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/imgui"/>
 					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/imgui/examples"/>
-					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/gl3w"/>
+					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/glm"/>
+					<Add directory="/usr/local/include/GL"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2_image.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2_ttf.framework/Headers"/>
@@ -74,7 +76,9 @@
 				<Compiler>
 					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/imgui"/>
 					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/imgui/examples"/>
-					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/gl3w"/>
+					<Add directory="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/glm"/>
+					<Add directory="/usr/local/include/GL"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2_image.framework/Headers"/>
 					<Add directory="/Library/Frameworks/SDL2_ttf.framework/Headers"/>
@@ -94,12 +98,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/gl3w/GL/gl3w.c">
-			<Option target="ZYEngine"/>
-		</Unit>
-		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/gl3w/GL/gl3w.h">
-			<Option target="ZYEngine"/>
-		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/libs/imgui/examples/imgui_impl_opengl3.cpp">
 			<Option target="ZYEngine"/>
 		</Unit>
@@ -134,6 +132,12 @@
 			<Option target="ZYEngine"/>
 		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Engine.h">
+			<Option target="ZYEngine"/>
+		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game.cpp">
+			<Option target="ZYEngine"/>
+		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game.h">
 			<Option target="ZYEngine"/>
 		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/main.cpp">
