@@ -24,8 +24,11 @@
 
 #include "EntityWindow.h"
 
+Entity* selectedNode;
+
 EntityWindow::EntityWindow(Game &game): game(game) {
     this->isOpen = true;
+    selectedNode = nullptr;
 }
 
 unsigned int EntityWindow::GetEntitySize() {
@@ -33,17 +36,40 @@ unsigned int EntityWindow::GetEntitySize() {
 }
 
 void EntityWindow::Update() {
+    DrawEntitySelection();
+    DrawEntityDetail();
+}
+
+void EntityWindow::DrawEntitySelection() {
     ImGui::Begin("Entity List", &this->isOpen);
 
     std::vector<Entity*> entities = game.GetEntities();
+
+    if(selectedNode != nullptr)
+        ImGui::Text("Selected: %s", selectedNode->name.c_str());
 
     if (ImGui::TreeNode("Entities"))
     {
         for (size_t i = 0; i < entities.size(); i++)
         {
-            ImGui::Text("%s", entities[i]->name.c_str());
+            ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+            if (selectedNode != nullptr && selectedNode == entities[i])
+                node_flags |= ImGuiTreeNodeFlags_Selected;
+
+            ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "%s", entities[i]->name.c_str());
+            if (ImGui::IsItemClicked())
+                selectedNode = entities[i];
         }
+
         ImGui::TreePop();
     }
+    ImGui::End();
+}
+
+void EntityWindow::DrawEntityDetail() {
+    if(!selectedNode) return;
+
+    ImGui::Begin("Entity Detail", &this->isOpen);
+    ImGui::Text("Entity detail will be here!");
     ImGui::End();
 }

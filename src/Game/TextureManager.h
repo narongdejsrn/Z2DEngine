@@ -22,28 +22,16 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_ENTITYWINDOW_H
-#define ZYENGINE_ENTITYWINDOW_H
+#ifndef ZYENGINE_TEXTUREMANAGER_H
+#define ZYENGINE_TEXTUREMANAGER_H
 
-#include <iostream>
+#include "glew.h"
 
-#include "Game/Game.h"
 
-class EntityWindow {
-private:
-    Game& game;
-    bool isOpen;
-
-    void DrawEntitySelection();
-    void DrawEntityDetail();
-
+class TextureManager {
 public:
-    EntityWindow(Game& game);
-
-    void Update();
-
-    unsigned int GetEntitySize();
+    static GLuint LoadImageTexture(const char *fileName);
 };
 
 
-#endif //ZYENGINE_ENTITYWINDOW_H
+#endif //ZYENGINE_TEXTUREMANAGER_H

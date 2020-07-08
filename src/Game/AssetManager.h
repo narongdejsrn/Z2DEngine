@@ -22,28 +22,27 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_ENTITYWINDOW_H
-#define ZYENGINE_ENTITYWINDOW_H
+#ifndef ZYENGINE_ASSETMANAGER_H
+#define ZYENGINE_ASSETMANAGER_H
 
-#include <iostream>
+#include <map>
+#include <string>
 
-#include "Game/Game.h"
+#include "glew.h"
 
-class EntityWindow {
+#include "EntityManager.h"
+
+class AssetManager {
 private:
-    Game& game;
-    bool isOpen;
-
-    void DrawEntitySelection();
-    void DrawEntityDetail();
+    EntityManager* manager;
+    std::map<std::string, GLuint> textures;
 
 public:
-    EntityWindow(Game& game);
+    AssetManager(EntityManager* manager);
+    ~AssetManager();
 
-    void Update();
-
-    unsigned int GetEntitySize();
+    void AddImageTexture(std::string textureId, const char* filePath);
 };
 
 
-#endif //ZYENGINE_ENTITYWINDOW_H
+#endif //ZYENGINE_ASSETMANAGER_H

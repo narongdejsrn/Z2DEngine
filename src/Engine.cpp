@@ -127,10 +127,10 @@ void Engine::DrawMainMenuBar() {
 }
 
 void Engine::DrawGameWindow() {
-    if(ImGui::Begin("Game", NULL, ImGuiWindowFlags_NoResize)) {
+    if(ImGui::Begin("Game", 0, ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse)) {
         ImGui::SetWindowSize(ImVec2(800, 600));
         game->Render();
-        auto wPos = ImGui::GetWindowPos();
+        ImVec2 wPos = ImGui::GetWindowPos();
         ImGui::GetWindowDrawList()->AddImage((void *)Game::GameTexture,
                                              { wPos.x, wPos.y},
                                              { wPos.x + 800, wPos.y + 600},

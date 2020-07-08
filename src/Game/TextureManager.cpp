@@ -22,28 +22,4 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_ENTITYWINDOW_H
-#define ZYENGINE_ENTITYWINDOW_H
-
-#include <iostream>
-
-#include "Game/Game.h"
-
-class EntityWindow {
-private:
-    Game& game;
-    bool isOpen;
-
-    void DrawEntitySelection();
-    void DrawEntityDetail();
-
-public:
-    EntityWindow(Game& game);
-
-    void Update();
-
-    unsigned int GetEntitySize();
-};
-
-
-#endif //ZYENGINE_ENTITYWINDOW_H
+#include "TextureManager.h"

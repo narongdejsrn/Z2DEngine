@@ -140,6 +140,12 @@
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/EntityWindow.h">
 			<Option target="ZYEngine"/>
 		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/AssetManager.cpp">
+			<Option target="ZYEngine"/>
+		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/AssetManager.h">
+			<Option target="ZYEngine"/>
+		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/Component.h">
 			<Option target="ZYEngine"/>
 		</Unit>
@@ -162,6 +168,12 @@
 			<Option target="ZYEngine"/>
 		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/Game.h">
+			<Option target="ZYEngine"/>
+		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/TextureManager.cpp">
+			<Option target="ZYEngine"/>
+		</Unit>
+		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/Game/TextureManager.h">
 			<Option target="ZYEngine"/>
 		</Unit>
 		<Unit filename="/Users/narongdejsrn/Projects/narongdej/ZYEngine/src/main.cpp">
