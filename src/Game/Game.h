@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 //
 // Created by Narongdej Sarnsuwan on 30/6/20.
 //
@@ -7,7 +8,7 @@
 
 #include <vector>
 
-#include <glew.h>
+#include <GL/glew.h>
 
 #include "../Engine.h"
 #include "./EntityManager.h"

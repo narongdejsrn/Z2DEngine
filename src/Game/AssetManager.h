@@ -28,7 +28,7 @@
 #include <map>
 #include <string>
 
-#include "glew.h"
+#include <gl/glew.h>
 
 #include "EntityManager.h"
 

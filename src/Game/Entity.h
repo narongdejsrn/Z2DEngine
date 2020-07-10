@@ -28,12 +28,15 @@
 #include <vector>
 #include <string>
 
+#include "Shader.h"
+
 class EntityManager;
 
 class Entity {
 private:
     EntityManager& manager;
     bool isActive;
+    Shader* shader;
 
 public:
     std::string name;

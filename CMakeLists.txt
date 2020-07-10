@@ -3,7 +3,7 @@ project(ZYEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-find_library(GLEW_LIB glew)
+find_library(GLEW_LIB glew32)
 if (NOT GLEW_LIB)
     message(FATAL_ERROR "glew not found")
 endif()
@@ -58,7 +58,7 @@ endif()
 set(IMGUI_DIR libs/imgui/)
 include_directories(${IMGUI_DIR} ${IMGUI_DIR}/examples)
 
-include_directories(libs/glm/)
+include_directories(libs)
 
 add_executable(ZYEngine src/main.cpp
         ${IMGUI_DIR}/examples/imgui_impl_sdl.cpp
@@ -71,11 +71,14 @@ add_executable(ZYEngine src/main.cpp
         src/Engine.h
         src/Constants.h
         src/Game/Game.cpp
-        src/Game/Game.h src/Game/EntityManager.cpp src/Game/EntityManager.h src/Game/Entity.cpp src/Game/Entity.h src/Game/Component.h src/Game/Components/SpriteComponent.h src/EntityWindow.cpp src/EntityWindow.h src/Game/AssetManager.cpp src/Game/AssetManager.h src/Game/TextureManager.cpp src/Game/TextureManager.h)
+        src/Game/Game.h src/Game/EntityManager.cpp src/Game/EntityManager.h src/Game/Entity.cpp src/Game/Entity.h src/Game/Component.h src/Game/Components/SpriteComponent.h src/EntityWindow.cpp src/EntityWindow.h src/Game/AssetManager.cpp src/Game/AssetManager.h src/Game/TextureManager.cpp src/Game/TextureManager.h src/Game/Shader.h src/Game/Shader.cpp)
 message(${OPENGL})
 
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY shaders DESTINATION ${CMAKE_BINARY_DIR})
+
 target_link_libraries(ZYEngine ${GLEW_LIB} ${OPENGL_LIB})
-target_include_directories(ZYEngine PRIVATE /usr/local/include/GL)
+target_include_directories(ZYEngine PRIVATE /usr/local/include)
 
 target_link_libraries(ZYEngine ${OPENGL} ${COCOA} ${COREVID})
 target_include_directories(ZYEngine PRIVATE ${OPENGL}/Headers)
