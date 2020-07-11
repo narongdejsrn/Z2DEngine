@@ -118,8 +118,8 @@ void Engine::ProcessInput() {
 void Engine::DrawMainMenuBar() {
     bool mainMenuOpen;
     if(ImGui::BeginMainMenuBar()) {
-        if (ImGui::BeginMenu("Hi")) {
-            ImGui::MenuItem("Metrics", NULL, &mainMenuOpen);
+        if (ImGui::BeginMenu("ZYEngine")) {
+            ImGui::MenuItem("Menu Boi", NULL, &mainMenuOpen);
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();

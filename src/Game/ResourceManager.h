@@ -29,7 +29,7 @@
 #include <map>
 
 #include <GL/glew.h>
-#include "../stb_image.h"
+#include "stb_image.h"
 
 #include "Shader.h"
 #include "Texture2D.h"

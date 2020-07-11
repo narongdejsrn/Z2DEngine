@@ -24,7 +24,7 @@
 
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(float posX, float posY, float velX, float velY, float w, float h, float s):
+TransformComponent::TransformComponent(float posX, float posY, float velX, float velY, int w, int h, int s):
         position(glm::vec2{posX, posY}), velocity({velX, velY}), width(w), height(h), scale(s) {};
 
 void TransformComponent::Update(float deltaTime) {

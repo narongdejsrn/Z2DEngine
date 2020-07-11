@@ -23,6 +23,7 @@
 //
 
 #include "EntityWindow.h"
+#include "Game/Components/TransformComponent.h"
 
 Entity* selectedNode;
 
@@ -70,6 +71,11 @@ void EntityWindow::DrawEntityDetail() {
     if(!selectedNode) return;
 
     ImGui::Begin("Entity Detail", &this->isOpen);
-    ImGui::Text("Entity detail will be here!");
+
+    TransformComponent* transform = selectedNode->GetComponent<TransformComponent>();
+    ImGui::DragFloat("Position X", &transform->position.x, 1);
+    ImGui::DragFloat("Position Y", &transform->position.y, 1);
+    ImGui::DragInt("Width", &transform->width, 1);
+    ImGui::DragInt("Height", &transform->height, 1);
     ImGui::End();
 }

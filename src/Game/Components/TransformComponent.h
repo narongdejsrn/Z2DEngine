@@ -35,7 +35,7 @@ public:
     glm::vec2 velocity;
     int width, height, scale;
 
-    TransformComponent(float posX, float posY, float velX, float velY, float w, float h, float s);
+    TransformComponent(float posX, float posY, float velX, float velY, int w, int h, int s);
     void Initialize() override {}
     void Update(float deltaTime) override;
     void Render() override {};
