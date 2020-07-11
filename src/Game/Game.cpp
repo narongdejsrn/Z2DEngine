@@ -53,19 +53,8 @@ void Game::Initialize(int width, int height) {
     Entity& entity1(entityManager->AddEntity("test"));
     Shader shader = ResourceManager::GetShader("sprite");
     Texture2D texture = ResourceManager::GetTexture("test");
-    entity1.AddComponent<SpriteComponent>(shader, texture, glm::vec2(150.0f, 150.0f),
-            glm::vec2(524.0f, 284.0f), 0.0f,
-                                          glm::vec3(1.0f, 1.0f, 1.0f));
-
-    Entity& entity2(entityManager->AddEntity("test2"));
-    entity2.AddComponent<SpriteComponent>(shader, texture, glm::vec2(150.0f, 150.0f),
-            glm::vec2(524.0f, 284.0f), 90.0f,
-                                          glm::vec3(1.0f, 1.0f, 1.0f));
-
-    Entity& entity3(entityManager->AddEntity("test3"));
-    entity3.AddComponent<SpriteComponent>(shader, texture, glm::vec2(100.0f, 100.0f),
-                                          glm::vec2(100.0f, 100.0f), 90.0f,
-                                          glm::vec3(0.0f, 0.0f, 1.0f));
+    entity1.AddComponent<TransformComponent>(150.0f, 150.0f, 0.0f, 0.0f, 250.0f, 250.0f, 2.0f);
+    entity1.AddComponent<SpriteComponent>(shader, texture, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
     this->isRunning = true;

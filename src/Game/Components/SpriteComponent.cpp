@@ -24,13 +24,13 @@
 #include "SpriteComponent.h"
 #include "../Game.h"
 
-SpriteComponent::SpriteComponent(Shader &shader, Texture2D &texture, glm::vec2 position, glm::vec2 size, float rotate, glm::vec3 color):
-shader(shader), texture(texture), position(position), size(size), rotate(rotate), color(color){
-    this->Initialize();
+SpriteComponent::SpriteComponent(Shader &shader, Texture2D &texture, glm::vec3 color):
+shader(shader), texture(texture), color(color){
 }
 
 void SpriteComponent::Initialize()
 {
+    transform = owner->GetComponent<TransformComponent>();
     // configure VAO/VBO
     float vertices[] = {
             // pos      // tex
@@ -61,13 +61,10 @@ void SpriteComponent::Update(float deltaTime)
 {
     // prepare transformations
     model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(position, 0.0f));
-
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+    model = glm::translate(model, glm::vec3(transform->position, 0.0f));
     model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-
-    model = glm::scale(model, glm::vec3(size, 1.0f));
+    model = glm::scale(model, glm::vec3(transform->width * transform->scale, transform->height * transform->scale
+            , 1.0f));
 }
 
 void SpriteComponent::Render() {

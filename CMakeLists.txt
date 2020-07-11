@@ -71,7 +71,7 @@ add_executable(ZYEngine src/main.cpp
         src/Engine.h
         src/Constants.h
         src/Game/Game.cpp
-        src/Game/Game.h src/Game/EntityManager.cpp src/Game/EntityManager.h src/Game/Entity.cpp src/Game/Entity.h src/Game/Component.h src/Game/Components/SpriteComponent.h src/EntityWindow.cpp src/EntityWindow.h src/Game/ResourceManager.cpp src/Game/ResourceManager.h src/Game/Shader.h src/Game/Shader.cpp src/Game/Texture2D.cpp src/Game/Texture2D.h src/Game/Components/SpriteComponent.cpp)
+        src/Game/Game.h src/Game/EntityManager.cpp src/Game/EntityManager.h src/Game/Entity.cpp src/Game/Entity.h src/Game/Component.h src/Game/Components/SpriteComponent.h src/EntityWindow.cpp src/EntityWindow.h src/Game/ResourceManager.cpp src/Game/ResourceManager.h src/Game/Shader.h src/Game/Shader.cpp src/Game/Texture2D.cpp src/Game/Texture2D.h src/Game/Components/SpriteComponent.cpp src/Game/Components/TransformComponent.cpp src/Game/Components/TransformComponent.h)
 message(${OPENGL})
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

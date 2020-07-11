@@ -22,37 +22,12 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_SPRITECOMPONENT_H
-#define ZYENGINE_SPRITECOMPONENT_H
-
-#include "../Component.h"
-#include "../Shader.h"
-#include "../Texture2D.h"
 #include "TransformComponent.h"
 
-class SpriteComponent : public Component {
-public:
-    SpriteComponent(Shader &shader, Texture2D &texture, glm::vec3 color = glm::vec3(1.0f));
+TransformComponent::TransformComponent(float posX, float posY, float velX, float velY, float w, float h, float s):
+        position(glm::vec2{posX, posY}), velocity({velX, velY}), width(w), height(h), scale(s) {};
 
-    ~SpriteComponent() override;
-
-    void Initialize() override;
-
-    void Update(float deltaTime) override;
-
-    void Render() override;
-
-private:
-    TransformComponent* transform;
-
-    Shader shader;
-    unsigned int quadVAO, VBO;
-    Texture2D texture;
-
-    glm::mat4 model;
-    float rotate;
-    glm::vec3 color;
-
-};
-
-#endif //ZYENGINE_SPRITECOMPONENT_H
+void TransformComponent::Update(float deltaTime) {
+//    position.x += velocity.x * deltaTime;
+//    position.y += velocity.y * deltaTime;
+}
