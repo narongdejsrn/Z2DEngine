@@ -32,7 +32,7 @@ public:
     Entity* owner;
     virtual ~Component() {};
     virtual void Initialize() {};
-    virtual void Update() {};
+    virtual void Update(float deltaTime) {};
     virtual void Render() {};
 };
 

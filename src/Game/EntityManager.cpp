@@ -28,13 +28,30 @@ std::vector<Entity *> EntityManager::GetEntities() const {
     return this->entities;
 }
 
-EntityManager::EntityManager() {
-    // Generate temp entity
-    Entity* entity1 = new Entity(*this);
-    entity1->name = "First Game Entity";
-    this->entities.emplace_back(entity1);
 
-    Entity* entity2 = new Entity(*this);
-    entity2->name = "Second Game Entity";
-    this->entities.emplace_back(entity2);
+void EntityManager::Update(float deltaTime) {
+    for (auto &entity: entities) {
+        entity->Update(deltaTime);
+    }
+    DestroyInactiveEntities();
+}
+
+void EntityManager::DestroyInactiveEntities() {
+    for (int i =0; i < entities.size(); i++){
+        if(!entities[i]->IsActive()) {
+            entities.erase(entities.begin() + i);
+        }
+    }
+}
+
+void EntityManager::Render() {
+    for(auto &entity: GetEntities()) {
+        entity->Render();
+    }
+}
+
+Entity& EntityManager::AddEntity(std::string entityName) {
+    Entity *entity = new Entity(*this, entityName);
+    this->entities.emplace_back(entity);
+    return *entity;
 }

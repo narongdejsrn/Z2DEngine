@@ -32,8 +32,8 @@ public:
 
     std::vector<Entity*> GetEntities();
 
-    static GLuint GameFBO;
-    static GLuint GameTexture;
+    static GLuint GameFramebuffer;
+    static GLuint GameColorBuffer;
 
     void Destroy();
 };

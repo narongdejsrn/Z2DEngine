@@ -26,10 +26,32 @@
 #define ZYENGINE_SPRITECOMPONENT_H
 
 #include "../Component.h"
+#include "../Shader.h"
+#include "../Texture2D.h"
 
-class SpriteComponent: public Component {
+class SpriteComponent : public Component {
 public:
-    SpriteComponent();
+    SpriteComponent(Shader &shader, Texture2D &texture, glm::vec2 position,
+                    glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotate = 0.0f,
+                    glm::vec3 color = glm::vec3(1.0f));
+
+    ~SpriteComponent() override;
+
+    void Initialize() override;
+
+    void Update(float deltaTime) override;
+
+    void Render() override;
+
+private:
+    Shader shader;
+    unsigned int quadVAO, VBO;
+    Texture2D texture;
+
+    glm::mat4 model;
+    glm::vec2 position, size;
+    float rotate;
+    glm::vec3 color;
 
 };
 

@@ -129,9 +129,8 @@ void Engine::DrawMainMenuBar() {
 void Engine::DrawGameWindow() {
     if(ImGui::Begin("Game", 0, ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse)) {
         ImGui::SetWindowSize(ImVec2(800, 600));
-        game->Render();
         ImVec2 wPos = ImGui::GetWindowPos();
-        ImGui::GetWindowDrawList()->AddImage((void *)Game::GameTexture,
+        ImGui::GetWindowDrawList()->AddImage((void *)Game::GameColorBuffer,
                                              { wPos.x, wPos.y},
                                              { wPos.x + 800, wPos.y + 600},
                                              {0, 1},
@@ -149,6 +148,7 @@ void Engine::Update() {
     DrawMainMenuBar();
     DrawGameWindow();
 
+    game->Update();
     entityWindow->Update();
 
     bool show_demo_window = true;
@@ -158,6 +158,8 @@ void Engine::Update() {
 void Engine::Render() {
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     ImGui::Render();
+
+    game->Render();
 
     glViewport(0, 0, (int)io->DisplaySize.x, (int)io->DisplaySize.y);
     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);

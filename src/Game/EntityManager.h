@@ -34,9 +34,11 @@ private:
     std::vector<Entity *> entities;
 
 public:
-    EntityManager();
+    void Update(float deltaTime);
+    void Render();
+    Entity& AddEntity(std::string entityName);
     std::vector<Entity*> GetEntities() const;
-
+    void DestroyInactiveEntities();
 };
 
 
