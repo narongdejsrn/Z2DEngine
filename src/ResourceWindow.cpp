@@ -32,6 +32,8 @@ GLuint FBO, TEX;
 
 ResourceWindow::ResourceWindow(Game &game): game(game){
     imageViewerOpen = false;
+    glGenFramebuffers(1, &FBO);
+    glGenTextures(1, &TEX);
 };
 
 void DrawSubTree(std::string curPath) {
@@ -91,17 +93,15 @@ void ResourceWindow::DrawResourceWindow() {
             ImVec2 windowSize = ImGui::GetWindowSize();
             ImVec2 wPos = ImGui::GetWindowPos();
 
-
-            glGenFramebuffers(1, &FBO);
             glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
-            glGenTextures(1, &TEX);
             glBindTexture(GL_TEXTURE_2D, TEX);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, TEX, 0);
 
+            glBindFramebuffer(GL_FRAMEBUFFER, FBO);
             glViewport(0, 0, windowSize.x, windowSize.y);
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
@@ -115,9 +115,6 @@ void ResourceWindow::DrawResourceWindow() {
                                                  {0, 1},
                                                  {1, 0});
 
-
-//            glDeleteFramebuffers(1, &FBO);
-//            glDeleteTextures(1, &TEX);
 
             ImGui::End();
         }
