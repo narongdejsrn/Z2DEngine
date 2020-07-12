@@ -22,43 +22,32 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_SPRITECOMPONENT_H
-#define ZYENGINE_SPRITECOMPONENT_H
+#include "TextureWindow.h"
 
-#include "../Component.h"
-#include "../Shader.h"
-#include "../Texture2D.h"
-#include "TransformComponent.h"
+std::string selectedTextureName;
 
-class SpriteComponent : public Component {
-public:
-    SpriteComponent(std::string shaderName, std::string textureName, glm::vec3 color = glm::vec3(1.0f));
-    SpriteComponent(std::string shaderName);
+TextureWindow::TextureWindow(Game &game): game(game) {
 
-    ~SpriteComponent() override;
+}
 
-    void Initialize() override;
-    void Update(float deltaTime) override;
-    void Render() override;
+void TextureWindow::DrawTextureWindow() {
+    if(ImGui::Begin("Texture Window", 0)) {
+        int i = 0;
+        for(std::pair<std::string, Texture2D> element : ResourceManager::Textures) {
+            ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+            if (selectedTextureName == element.first)
+                node_flags |= ImGuiTreeNodeFlags_Selected;
+            ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "%s", element.first.c_str());
+            if(ImGui::IsItemClicked()) {
+                selectedTextureName = element.first;
+            }
 
-    void SetTexture(std::string textureName);
+            ImGui::SameLine();
+            if (ImGui::SmallButton("button")) {
 
-    std::string GetShaderName();
-    std::string GetTextureName();
-
-    void ForceTransform(TransformComponent& transform);
-
-private:
-    TransformComponent* transform;
-
-    std::string shaderName, textureName;
-    unsigned int quadVAO, VBO;
-    Texture2D texture;
-
-    glm::mat4 model;
-    float rotate;
-    glm::vec3 color;
-
-};
-
-#endif //ZYENGINE_SPRITECOMPONENT_H
+            }
+            i++;
+        }
+        ImGui::End();
+    }
+}

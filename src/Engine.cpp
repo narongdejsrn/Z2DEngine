@@ -6,6 +6,7 @@
 #include "Game/Game.h"
 #include "EntityWindow.h"
 #include "ResourceWindow.h"
+#include "TextureWindow.h"
 
 SDL_Window* window;
 ImGuiIO* io;
@@ -15,6 +16,7 @@ SDL_Renderer* Engine::renderer;
 Game* game;
 EntityWindow* entityWindow;
 ResourceWindow* resourceWindow;
+TextureWindow* textureWindow;
 
 Engine::Engine() {
     this->isRunning = true;
@@ -77,6 +79,8 @@ void Engine::Initialize(int width, int height) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     io = &ImGui::GetIO(); (void)io;
+//    io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+
     ImGui::StyleColorsDark();
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
     ImGui_ImplOpenGL3_Init(glsl_version);
@@ -91,31 +95,36 @@ void Engine::Initialize(int width, int height) {
     // Initialize Resource Window
     resourceWindow = new ResourceWindow(*game);
 
+    // Initialize Texture Windwo
+    textureWindow = new TextureWindow(*game);
+
     this->isRunning = true;
 }
 
 /* Process the input into the engine */
 void Engine::ProcessInput() {
-    SDL_PollEvent(&event);
-    switch (event.type) {
-        case SDL_QUIT: {
-            this->isRunning = false;
-            break;
-        }
-        case SDL_KEYDOWN: {
-            if(event.key.keysym.sym == SDLK_ESCAPE) {
+    while(SDL_PollEvent(&event)){
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        switch (event.type) {
+            case SDL_QUIT: {
                 this->isRunning = false;
+                break;
             }
-            break;
-        }
-        case SDL_WINDOWEVENT: {
-            if(event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window)) {
-                this->isRunning = false;
+            case SDL_KEYDOWN: {
+                if(event.key.keysym.sym == SDLK_ESCAPE) {
+                    this->isRunning = false;
+                }
+                break;
             }
-            break;
-        }
-        default : {
-            break;
+            case SDL_WINDOWEVENT: {
+                if(event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window)) {
+                    this->isRunning = false;
+                }
+                break;
+            }
+            default : {
+                break;
+            }
         }
     }
 }
@@ -153,6 +162,7 @@ void Engine::Update() {
     DrawMainMenuBar();
     DrawGameWindow();
     resourceWindow->DrawResourceWindow();
+    textureWindow->DrawTextureWindow();
 
     game->Update();
     entityWindow->Update();

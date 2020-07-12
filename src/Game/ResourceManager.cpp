@@ -35,9 +35,6 @@ std::map<std::string, Shader>       ResourceManager::Shaders;
 
 Shader ResourceManager::LoadShader(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile, std::string name)
 {
-//    if(Shaders.find(name) != Shaders.end()) {
-//        printf("The shader name %s is already exists, replacing shader\n", name.c_str());
-//    }
     Shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
     return Shaders[name];
 }

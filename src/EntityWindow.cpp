@@ -38,44 +38,76 @@ unsigned int EntityWindow::GetEntitySize() {
 
 void EntityWindow::Update() {
     DrawEntitySelection();
-    DrawEntityDetail();
+    DrawInspector();
 }
 
 void EntityWindow::DrawEntitySelection() {
     ImGui::Begin("Entity List", &this->isOpen);
+    ImVec2 windowSize = ImGui::GetWindowSize();
+
+    if (ImGui::Button("Create new Entity", {windowSize.x, 20})) {
+        Entity& entity(game.GetEntityManager()->AddEntity("New Object"));
+        entity.AddComponent<TransformComponent>(10.0f, 10.0f, 0.0f, 0.0f, 120.0f, 120.0f, 1.0f);
+    }
+
+    ImGui::Separator();
 
     std::vector<Entity*> entities = game.GetEntities();
 
-    if(selectedNode != nullptr)
-        ImGui::Text("Selected: %s", selectedNode->name.c_str());
-
-    if (ImGui::TreeNode("Entities"))
+    for (size_t i = 0; i < entities.size(); i++)
     {
-        for (size_t i = 0; i < entities.size(); i++)
-        {
-            ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-            if (selectedNode != nullptr && selectedNode == entities[i])
-                node_flags |= ImGuiTreeNodeFlags_Selected;
+        ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+        if (selectedNode != nullptr && selectedNode == entities[i])
+            node_flags |= ImGuiTreeNodeFlags_Selected;
 
-            ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "%s", entities[i]->name.c_str());
-            if (ImGui::IsItemClicked())
-                selectedNode = entities[i];
-        }
-
-        ImGui::TreePop();
+        ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "%s", entities[i]->name);
+        if (ImGui::IsItemClicked())
+            selectedNode = entities[i];
     }
     ImGui::End();
 }
 
-void EntityWindow::DrawEntityDetail() {
+void EntityWindow::DrawInspector() {
     if(!selectedNode) return;
 
-    ImGui::Begin("Entity Detail", &this->isOpen);
+    ImGui::Begin("Inspector", &this->isOpen);
+
+    ImGui::InputText("Entity Name", selectedNode->name, IM_ARRAYSIZE(selectedNode->name));
 
     TransformComponent* transform = selectedNode->GetComponent<TransformComponent>();
-    ImGui::DragFloat("Position X", &transform->position.x, 1);
-    ImGui::DragFloat("Position Y", &transform->position.y, 1);
-    ImGui::DragInt("Width", &transform->width, 1);
-    ImGui::DragInt("Height", &transform->height, 1);
+    if(transform) {
+        ImGui::Text("Transform Component");
+        ImGui::DragFloat("Position X", &transform->position.x, 1);
+        ImGui::DragFloat("Position Y", &transform->position.y, 1);
+        ImGui::DragInt("Width", &transform->width, 1);
+        ImGui::DragInt("Height", &transform->height, 1);
+        ImGui::Separator();
+    }
+
+    SpriteComponent* sprite = selectedNode->GetComponent<SpriteComponent>();
+    if(sprite) {
+        ImGui::Text("Sprite Component");
+        ImGui::Text("Shader Name: %s", sprite->GetShaderName().c_str());
+        ImGui::Text("Texture Name: %s", sprite->GetTextureName().c_str());
+        ImGui::SameLine();
+        if(ImGui::Button("Change Texture")) {
+            ImGui::OpenPopup("texture_selection");
+        }
+        ImGui::Separator();
+    } else {
+        if(ImGui::Button("Create Sprite Component")) {
+            selectedNode->AddComponent<SpriteComponent>("sprite");
+        }
+    }
+
+    if (ImGui::BeginPopup("texture_selection"))
+    {
+        for(auto& texture : ResourceManager::Textures) {
+            if(ImGui::Selectable(texture.first.c_str())) {
+                sprite->SetTexture(texture.first);
+            }
+        }
+        ImGui::EndPopup();
+    }
     ImGui::End();
 }

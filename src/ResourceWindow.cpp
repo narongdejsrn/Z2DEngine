@@ -62,15 +62,14 @@ void DrawSubTree(std::string curPath) {
 }
 
 void ResourceWindow::DrawSimpleImage(std::string path, ImVec2* windowSize, GLuint FBO) {
-    ResourceManager::LoadShader("../shaders/sprite.vert", "../shaders/sprite.frag", nullptr, "sprite2");
+    ResourceManager::LoadShader("../shaders/sprite.vert", "../shaders/sprite.frag", nullptr, "preview_sprite");
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(windowSize->x),
                                       static_cast<float>(windowSize->y), 0.0f, -1.0f, 1.0f);
-    ResourceManager::GetShader("sprite2").Use().SetInteger("image", 0);
-    ResourceManager::GetShader("sprite2").SetMatrix4("projection", projection);
-    Shader shader = ResourceManager::GetShader("sprite2");
-    Texture2D image = ResourceManager::LoadTexture(path.c_str(), "image");
+    ResourceManager::GetShader("preview_sprite").Use().SetInteger("image", 0);
+    ResourceManager::GetShader("preview_sprite").SetMatrix4("projection", projection);
+    ResourceManager::LoadTexture(path.c_str(), "preview_image");
 
-    SpriteComponent* sprite = new SpriteComponent(shader, image, glm::vec3(1.0f, 1.0f, 1.0f));
+    SpriteComponent* sprite = new SpriteComponent("preview_sprite", "preview_image", glm::vec3(1.0f, 1.0f, 1.0f));
     sprite->Initialize();
 
     TransformComponent* transform = new TransformComponent(0.0f, 0.0f, 0.0f, 0.0f, windowSize->x, windowSize->y, 1);
@@ -114,6 +113,12 @@ void ResourceWindow::DrawResourceWindow() {
                                                  { wPos.x + windowSize.x, wPos.y + windowSize.y},
                                                  {0, 1},
                                                  {1, 0});
+
+            static char textureName[128];
+            ImGui::InputText("Texture Name: ", textureName, IM_ARRAYSIZE(textureName));
+            if(ImGui::Button("Create Texture From Image")){
+                ResourceManager::LoadTexture(selectedPath.c_str(), textureName);
+            }
 
 
             ImGui::End();

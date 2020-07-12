@@ -22,43 +22,20 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_SPRITECOMPONENT_H
-#define ZYENGINE_SPRITECOMPONENT_H
+#ifndef ZYENGINE_TEXTUREWINDOW_H
+#define ZYENGINE_TEXTUREWINDOW_H
 
-#include "../Component.h"
-#include "../Shader.h"
-#include "../Texture2D.h"
-#include "TransformComponent.h"
+#include "Constants.h"
+#include "Game/Game.h"
 
-class SpriteComponent : public Component {
+class TextureWindow {
 public:
-    SpriteComponent(std::string shaderName, std::string textureName, glm::vec3 color = glm::vec3(1.0f));
-    SpriteComponent(std::string shaderName);
-
-    ~SpriteComponent() override;
-
-    void Initialize() override;
-    void Update(float deltaTime) override;
-    void Render() override;
-
-    void SetTexture(std::string textureName);
-
-    std::string GetShaderName();
-    std::string GetTextureName();
-
-    void ForceTransform(TransformComponent& transform);
+    TextureWindow(Game& game);
+    void DrawTextureWindow();
 
 private:
-    TransformComponent* transform;
-
-    std::string shaderName, textureName;
-    unsigned int quadVAO, VBO;
-    Texture2D texture;
-
-    glm::mat4 model;
-    float rotate;
-    glm::vec3 color;
-
+    Game& game;
 };
 
-#endif //ZYENGINE_SPRITECOMPONENT_H
+
+#endif //ZYENGINE_TEXTUREWINDOW_H

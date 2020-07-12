@@ -31,6 +31,7 @@ public:
     void Initialize(int width, int height);
     void Update();
     void Render();
+    EntityManager* GetEntityManager();
 
     std::vector<Entity*> GetEntities();
 

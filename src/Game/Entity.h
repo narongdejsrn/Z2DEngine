@@ -43,7 +43,7 @@ private:
     std::map<const std::type_info*, Component*> componentTypeMap;
 
 public:
-    std::string name;
+    char name[256];
 
     Entity(EntityManager& manager, std::string name);
 

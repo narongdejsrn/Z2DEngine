@@ -24,9 +24,14 @@
 #include "SpriteComponent.h"
 #include "../Game.h"
 
-SpriteComponent::SpriteComponent(Shader &shader, Texture2D &texture, glm::vec3 color):
-shader(shader), texture(texture), color(color){
+SpriteComponent::SpriteComponent(std::string shaderName, std::string textureName, glm::vec3 color):
+shaderName(shaderName), textureName(textureName), color(color){
     this->rotate = 0;
+}
+
+SpriteComponent::SpriteComponent(std::string shaderName): shaderName(shaderName), textureName("") {
+    this->rotate = 0;
+    this->color = {1.0f, 1.0f, 1.0f};
 }
 
 void SpriteComponent::ForceTransform(TransformComponent &transform) {
@@ -66,6 +71,7 @@ void SpriteComponent::Initialize()
 
 void SpriteComponent::Update(float deltaTime)
 {
+    if(transform == nullptr) return;
     // prepare transformations
     model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(transform->position, 0.0f));
@@ -75,10 +81,15 @@ void SpriteComponent::Update(float deltaTime)
 }
 
 void SpriteComponent::Render() {
-    this->shader.Use();
-    this->shader.SetMatrix4("model", model);
-    this->shader.SetVector3f("spriteColor", color);
-    this->texture.Bind();
+    if(textureName.empty()) return;
+
+    Shader shader = ResourceManager::GetShader(shaderName);
+    shader.Use();
+    shader.SetMatrix4("model", model);
+    shader.SetVector3f("spriteColor", color);
+
+    Texture2D texture = ResourceManager::GetTexture(textureName);
+    texture.Bind();
 
     glBindVertexArray(this->quadVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -89,4 +100,16 @@ void SpriteComponent::Render() {
 SpriteComponent::~SpriteComponent() {
     glDeleteVertexArrays(1, &this->quadVAO);
     glDeleteBuffers(1, &VBO);
+}
+
+std::string SpriteComponent::GetShaderName() {
+    return shaderName;
+}
+
+std::string SpriteComponent::GetTextureName() {
+    return textureName;
+}
+
+void SpriteComponent::SetTexture(std::string textureName) {
+    this->textureName = textureName;
 }

@@ -24,8 +24,9 @@
 
 #include "Entity.h"
 
-Entity::Entity(EntityManager &manager, std::string name): manager(manager), name(name) {
+Entity::Entity(EntityManager &manager, std::string name): manager(manager) {
     this->isActive = true;
+    strcpy(this->name, name.c_str());
 }
 
 void Entity::Update(float deltaTime) {

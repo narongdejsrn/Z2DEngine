@@ -35,7 +35,7 @@ private:
     bool isOpen;
 
     void DrawEntitySelection();
-    void DrawEntityDetail();
+    void DrawInspector();
 
 public:
     EntityWindow(Game& game);
