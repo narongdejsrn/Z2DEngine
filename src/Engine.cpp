@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Game/Game.h"
 #include "EntityWindow.h"
+#include "ResourceWindow.h"
 
 SDL_Window* window;
 ImGuiIO* io;
@@ -13,6 +14,7 @@ SDL_GLContext* Engine::gl_context;
 SDL_Renderer* Engine::renderer;
 Game* game;
 EntityWindow* entityWindow;
+ResourceWindow* resourceWindow;
 
 Engine::Engine() {
     this->isRunning = true;
@@ -86,6 +88,9 @@ void Engine::Initialize(int width, int height) {
     // Initialize Entity Window
     entityWindow = new EntityWindow(*game);
 
+    // Initialize Resource Window
+    resourceWindow = new ResourceWindow(*game);
+
     this->isRunning = true;
 }
 
@@ -118,8 +123,8 @@ void Engine::ProcessInput() {
 void Engine::DrawMainMenuBar() {
     bool mainMenuOpen;
     if(ImGui::BeginMainMenuBar()) {
-        if (ImGui::BeginMenu("ZYEngine")) {
-            ImGui::MenuItem("Menu Boi", NULL, &mainMenuOpen);
+        if (ImGui::BeginMenu("File")) {
+            ImGui::MenuItem("New Project", NULL, &mainMenuOpen);
             ImGui::EndMenu();
         }
         ImGui::EndMainMenuBar();
@@ -147,6 +152,7 @@ void Engine::Update() {
 
     DrawMainMenuBar();
     DrawGameWindow();
+    resourceWindow->DrawResourceWindow();
 
     game->Update();
     entityWindow->Update();

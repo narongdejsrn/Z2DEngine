@@ -1,5 +1,9 @@
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "Constants.h"
 #include "Engine.h"
+
+#include "stb_image.h"
 
 int main(int argc, const char * argv[]) {
     Engine *engine = new Engine();

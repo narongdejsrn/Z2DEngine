@@ -22,36 +22,27 @@
 // SOFTWARE.
 //
 
-#ifndef ZYENGINE_RESOURCEMANAGER_H
-#define ZYENGINE_RESOURCEMANAGER_H
+#ifndef ZYENGINE_RESOURCEWINDOW_H
+#define ZYENGINE_RESOURCEWINDOW_H
 
+#include <string>
 #include <iostream>
-#include <map>
+#include <filesystem>
+namespace fs = std::filesystem;
 
-#include <GL/glew.h>
-#include "stb_image.h"
+#include "Constants.h"
+#include "Game/Game.h"
 
-#include "Shader.h"
-#include "Texture2D.h"
-
-
-class ResourceManager {
+class ResourceWindow {
 public:
-    static std::map<std::string, Shader>    Shaders;
-    static std::map<std::string, Texture2D> Textures;
-
-    static Shader LoadShader(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile,
-            std::string name);
-    static Shader GetShader(std::string name);
-    static Texture2D LoadTexture(const char *file, std::string name);
-    static Texture2D GetTexture(std::string name);
-    static void Clear();
+    ResourceWindow(Game& game);
+    void DrawResourceWindow();
 
 private:
-    ResourceManager() {}
-    static Shader loadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile = nullptr);
-    static Texture2D loadTextureFromFile(const char *file);
+    Game& game;
+    void DrawSimpleImage(std::string path, ImVec2* windowSize, GLuint FBO);
+
 };
 
 
-#endif //ZYENGINE_RESOURCEMANAGER_H
+#endif //ZYENGINE_RESOURCEWINDOW_H

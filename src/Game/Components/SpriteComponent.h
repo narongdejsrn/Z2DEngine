@@ -37,10 +37,10 @@ public:
     ~SpriteComponent() override;
 
     void Initialize() override;
-
     void Update(float deltaTime) override;
-
     void Render() override;
+
+    void ForceTransform(TransformComponent& transform);
 
 private:
     TransformComponent* transform;

@@ -3,8 +3,6 @@
 //
 
 #include "Game.h"
-#include "ResourceManager.h"
-#include "Components/SpriteComponent.h"
 
 GLuint Game::GameFramebuffer;
 GLuint Game::GameColorBuffer;
@@ -48,7 +46,7 @@ void Game::Initialize(int width, int height) {
     ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
 
     // load textures
-    ResourceManager::LoadTexture("../assets/test.png", false, "test");
+    ResourceManager::LoadTexture("../assets/test.png", "test");
 
     Shader shader = ResourceManager::GetShader("sprite");
     Texture2D texture = ResourceManager::GetTexture("test");
@@ -56,11 +54,6 @@ void Game::Initialize(int width, int height) {
     Entity& entity1(entityManager->AddEntity("test"));
     entity1.AddComponent<TransformComponent>(150.0f, 150.0f, 0.0f, 0.0f, 500.0f, 250.0f, 1.0f);
     entity1.AddComponent<SpriteComponent>(shader, texture, glm::vec3(1.0f, 1.0f, 1.0f));
-
-    Entity& entity2(entityManager->AddEntity("test2"));
-    entity2.AddComponent<TransformComponent>(0.0f, 150.0f, 0.0f, 0.0f, 500.0f, 250.0f, 1.0f);
-    entity2.AddComponent<SpriteComponent>(shader, texture, glm::vec3(1.0f, 1.0f, 1.0f));
-
 
     this->isRunning = true;
 }

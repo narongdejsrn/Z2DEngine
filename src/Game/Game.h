@@ -1,4 +1,3 @@
-#define STB_IMAGE_IMPLEMENTATION
 //
 // Created by Narongdej Sarnsuwan on 30/6/20.
 //
@@ -12,6 +11,9 @@
 
 #include "../Engine.h"
 #include "./EntityManager.h"
+#include "ResourceManager.h"
+#include "Components/SpriteComponent.h"
+#include "Components/TransformComponent.h"
 
 class Game {
 

@@ -26,11 +26,18 @@
 
 SpriteComponent::SpriteComponent(Shader &shader, Texture2D &texture, glm::vec3 color):
 shader(shader), texture(texture), color(color){
+    this->rotate = 0;
+}
+
+void SpriteComponent::ForceTransform(TransformComponent &transform) {
+    this->transform = &transform;
 }
 
 void SpriteComponent::Initialize()
 {
-    transform = owner->GetComponent<TransformComponent>();
+    if(owner != nullptr && owner->HasComponent<TransformComponent>())
+        transform = owner->GetComponent<TransformComponent>();
+
     // configure VAO/VBO
     float vertices[] = {
             // pos      // tex
@@ -71,8 +78,7 @@ void SpriteComponent::Render() {
     this->shader.Use();
     this->shader.SetMatrix4("model", model);
     this->shader.SetVector3f("spriteColor", color);
-
-    texture.Bind();
+    this->texture.Bind();
 
     glBindVertexArray(this->quadVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
