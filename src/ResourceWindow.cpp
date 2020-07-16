@@ -36,7 +36,7 @@ ResourceWindow::ResourceWindow(Game &game): game(game){
     glGenTextures(1, &TEX);
 };
 
-void DrawSubTree(std::string curPath) {
+void ResourceWindow::DrawSubTree(std::string curPath) {
     int i = 0;
     for(const auto & entry : fs::directory_iterator(curPath)) {
         if(entry.is_directory()) {
@@ -52,10 +52,24 @@ void DrawSubTree(std::string curPath) {
             if (selectedPath == entry.path())
                 node_flags |= ImGuiTreeNodeFlags_Selected;
             ImGui::TreeNodeEx((void*)(intptr_t)i, node_flags, "%s", entry.path().filename().c_str());
-            if(ImGui::IsItemClicked()) {
-                selectedPath = entry.path();
-                imageViewerOpen = true;
+
+            if (ImGui::BeginPopupContextItem())
+            {
+                if(ImGui::Selectable("Preview Image")) {
+                    selectedPath = entry.path();
+                    imageViewerOpen = true;
+                }
+
+                if(ImGui::Selectable("Add to Entity")) {
+                    // Create a new entity with the current file as texture, also with the file name as entity name
+                    Entity& entity(game.GetEntityManager()->AddEntity(entry.path().filename()));
+                    entity.AddComponent<TransformComponent>(0.0f, 0.0f, 0.0f, 0.0f, 120.0f, 120.0f, 1.0f);
+                    ResourceManager::LoadTexture(entry.path().c_str(), entry.path());
+                    entity.AddComponent<SpriteComponent>("sprite", entry.path());
+                }
+                ImGui::EndPopup();
             }
+
             i++;
         }
     }

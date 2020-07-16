@@ -41,6 +41,7 @@ public:
 private:
     Game& game;
     void DrawSimpleImage(std::string path, ImVec2* windowSize, GLuint FBO);
+    void DrawSubTree(std::string curPath);
 
 };
 
